@@ -1,5 +1,6 @@
 ﻿using AppBlogCore.Data;
 using AppBlogCore.DataAccess.Data.Repository.IRepository;
+using AppBlogCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,10 +24,30 @@ namespace AppBlogCore.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
+                return RedirectToAction("Index");
+            }
+
+            return View(category);
+        }
+
         #region API
         public IActionResult GetAll()
         {
-            return Json(new { datat = _unitOfWork.Category.GetAll() });
+            return Json(new { data = _unitOfWork.Category.GetAll() });
         }
         #endregion
     }
