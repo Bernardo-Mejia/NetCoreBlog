@@ -44,6 +44,32 @@ namespace AppBlogCore.Areas.Admin.Controllers
             return View(category);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Category category = new();
+            category = _unitOfWork.Category.Get(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Category.Update(category);
+                _unitOfWork.Save();
+                return RedirectToAction("Index");
+            }
+            return View(category);
+        }
+
         #region API
         public IActionResult GetAll()
         {
