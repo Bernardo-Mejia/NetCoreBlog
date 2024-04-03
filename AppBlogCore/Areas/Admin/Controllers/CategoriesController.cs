@@ -71,9 +71,21 @@ namespace AppBlogCore.Areas.Admin.Controllers
         }
 
         #region API
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Json(new { data = _unitOfWork.Category.GetAll() });
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            Category objFromDb = _unitOfWork.Category.Get(id);
+            if (objFromDb == null)
+                return Json(new { success = false, message = $"Error deleting category {id}" });
+            _unitOfWork.Category.Remove(objFromDb);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = $"Category {id} deleted succesfully" });
         }
         #endregion
     }
