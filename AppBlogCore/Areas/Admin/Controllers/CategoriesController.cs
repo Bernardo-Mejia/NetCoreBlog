@@ -47,8 +47,7 @@ namespace AppBlogCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Category category = new();
-            category = _unitOfWork.Category.Get(id);
+            Category category = _unitOfWork.Category.Get(id);
 
             if (category == null)
             {
