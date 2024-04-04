@@ -11,6 +11,8 @@ namespace AppBlogCore.DataAccess.Data.Repository.IRepository
         // REPOS
         ICategoryRepository Category { get; }
 
+        IArticleRepository Article { get; }
+
         void Save();
     }
 }
