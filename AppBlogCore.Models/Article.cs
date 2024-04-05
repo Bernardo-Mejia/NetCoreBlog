@@ -31,7 +31,7 @@ namespace AppBlogCore.Models
         public int CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
-        public required Category Category { get; set; }
+        public Category Category { get; set; }
 
     }
 }

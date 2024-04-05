@@ -1,5 +1,6 @@
 ﻿using AppBlogCore.Data;
 using AppBlogCore.DataAccess.Data.Repository.IRepository;
+using AppBlogCore.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppBlogCore.Areas.Admin.Controllers
@@ -16,9 +17,21 @@ namespace AppBlogCore.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ArticleVM articuloVM = new()
+            {
+                Article = new Models.Article(),
+                CategoryList = _unitOfWork.Category.GetListCategories()
+            };
+            return View(articuloVM);
         }
 
 
