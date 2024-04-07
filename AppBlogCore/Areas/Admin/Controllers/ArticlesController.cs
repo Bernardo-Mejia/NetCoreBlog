@@ -8,12 +8,12 @@ namespace AppBlogCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class ArticlesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostingEnviroment;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ArticlesController(ApplicationDbContext context, IUnitOfWork unitOfWork)
+        public ArticlesController(IWebHostEnvironment hostingEnviroment, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _hostingEnviroment = hostingEnviroment;
             _unitOfWork = unitOfWork;
         }
 
@@ -32,6 +32,41 @@ namespace AppBlogCore.Areas.Admin.Controllers
                 CategoryList = _unitOfWork.Category.GetListCategories()
             };
             return View(articuloVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ArticleVM articleVM)
+        {
+            if (ModelState.IsValid)
+            {
+                string rootPath = _hostingEnviroment.WebRootPath;
+                IFormFileCollection files = HttpContext.Request.Form.Files;
+                if (articleVM.Article.Id == 0)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    string uploads = Path.Combine(rootPath, @"Images\Articles");
+                    string extension = Path.GetExtension(files[0].FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStreams);
+                    }
+
+                    articleVM.Article.ImageURL = @"Images\Articles\" + fileName + extension;
+                    articleVM.Article.CreatedAt = DateTime.UtcNow;
+
+                    articleVM.Article.Category = _unitOfWork.Category.Get(articleVM.Article.CategoryId);
+
+                    _unitOfWork.Article.Add(articleVM.Article);
+                    _unitOfWork.Save();
+
+                    return RedirectToAction("Index");
+                }
+            }
+
+            articleVM.CategoryList = _unitOfWork.Category.GetListCategories();
+            return View(articleVM);
         }
 
 
