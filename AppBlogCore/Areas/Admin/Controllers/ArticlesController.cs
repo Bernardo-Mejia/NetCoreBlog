@@ -138,6 +138,29 @@ namespace AppBlogCore.Areas.Admin.Controllers
             return Json(new { data = _unitOfWork.Article.GetAll() });
         }
 
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            Models.Article article = _unitOfWork.Article.Get(id);
+
+            if (article != null)
+            {
+                string rootPath = _hostingEnvironment.WebRootPath;
+                string filePath = Path.Combine(rootPath, article.ImageURL.TrimStart('\\'));
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                _unitOfWork.Article.Remove(article);
+                _unitOfWork.Save();
+                return Json(new { success = true, message = $"Article {id} deleted succesfully" });
+            }
+
+            return Json(new { success = false, message = $"Error deleting article {id}" });
+        }
+
         #endregion
     }
 }
