@@ -1,0 +1,108 @@
+﻿@model AppBlogCore.Models.ViewModel.ArticleVM
+
+@{
+    ViewData["Title"] = "Edit Article";
+}
+
+<br>
+<br>
+<h3 class="text-center">Edit Article</h3>
+
+<form method="POST" asp-action="Edit" enctype="multipart/form-data">
+    <input asp-for="Article.Id" type="hidden" />
+    <input asp-for="Article.CreatedAt" type="hidden" />
+    <div class="row px-2 offset-1 border ">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-8 mt-4">
+            <div class="form-group row my-3">
+                <div class="col-6">
+                    <label class="col-4">
+                        <label asp-for="Article.Name"></label>
+
+                    </label>
+                </div>
+                <div class="col-6">
+                    <input asp-for="Article.Name" class="form-control" placeholder="Enter Name" />
+                    <span asp-validation-for="Article.Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row my-3">
+                <div class="col-6">
+                    <label class="col-4">
+                        <label asp-for="Article.Description"></label>
+                        <span asp-validation-for="Article.Description" class="text-danger"></span>
+                    </label>
+                </div>
+                <div class="col-6">
+                    <textarea asp-for="Article.Description" class="form-control" style="height: 300px;"></textarea>
+                    <span asp-validation-for="Article.Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row my-3">
+                <div class="col-6">
+                    <label class="col-4">
+                        <label for="Category">Category</label>
+
+                    </label>
+                </div>
+                <div class="col-6">
+                    @Html.DropDownListFor(m => m.Article.CategoryId, Model.CategoryList, "-- Select a category --", new {@class = "form-control"})
+                    <span asp-validation-for="Article.CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+
+            @* <div class="form-group row my-3">
+            <div class="col-6">
+            <label class="col-4">
+            <label asp-for="Article.CategoryId"></label>
+            </label>
+            </div>
+            <div class="col-6">
+            <select asp-for="Article.CategoryId" asp-items="Model.CategoryList" class="form-control">
+            <option value="">Select a category</option>
+            </select>
+            <span asp-validation-for="Article.CategoryId" class="text-danger"></span>
+            </div>
+            </div> *@
+
+            <div class="form-group row my-3">
+                <div class="col-6">
+                    <label class="col-4">
+                        <label asp-for="Article.ImageURL"></label>
+                    </label>
+                </div>
+                <div class="col-6">
+                    <input type="file" name="files" id="uploadFiles" class="form-control" />
+                    <span asp-validation-for="Article.ImageURL" class="text-danger"></span>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-4 pt-3">
+            <img src="@Model.Article.ImageURL" style="border-radius: 5px; border: 1px solid #bbb9b9;" class="img-fluid img-thumbnail" />
+        </div>
+        <div class="form-group row my-3 col-12">
+            <div class="col-12">
+                <button type="submit" class="btn btn-warning form-control my-2" asp-route-id="@Model.Article.Id">Update</button>
+            </div>
+            <div class="col-12">
+                <a asp-action="Index" class="btn btn-primary form-control">Back list</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <script src="https://cdn.tiny.cloud/1/qukxrn62f4bz0iv6z7enaelkkzuzugir28y709xit9xm659s/tinymce/5/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: "textarea",
+            plugins: "lists",
+            menubar: "file edit format"
+        });
+    </script>
+}
