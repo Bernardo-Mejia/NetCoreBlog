@@ -16,11 +16,10 @@ namespace AppBlogCore.Models
         [Display(Name = "Slider Name")]
         public string Name { get; set; }
 
-        public Nullable<bool> Status { get; set; }
+        public bool Status { get; set; }
 
         [DataType(DataType.ImageUrl)]
         [Display(Name = "Image URL")]
-        [Required(ErrorMessage = "El campo {0} es requerido")]
         public string UrlImagen { get; set; }
     }
 }
