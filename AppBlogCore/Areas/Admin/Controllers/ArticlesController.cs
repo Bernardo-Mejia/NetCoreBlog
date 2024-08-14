@@ -48,6 +48,15 @@ namespace AppBlogCore.Areas.Admin.Controllers
                     string uploads = Path.Combine(rootPath, @"Images\Articles");
                     string extension = Path.GetExtension(files[0].FileName);
 
+                    Console.WriteLine("\n============== CARPETA UPLOADS ============", uploads);
+
+                    // Verificar y crear el directorio si no existe
+                    if (!Directory.Exists(uploads))
+                    {
+                        Console.WriteLine("\n============== SE CREÓ UPLOADS ============", uploads);
+                        Directory.CreateDirectory(uploads);
+                    }
+
                     using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         files[0].CopyTo(fileStreams);
@@ -55,6 +64,8 @@ namespace AppBlogCore.Areas.Admin.Controllers
 
                     articleVM.Article.ImageURL = @"\Images\Articles\" + fileName + extension;
                     articleVM.Article.CreatedAt = DateTime.UtcNow;
+
+                    Console.WriteLine("\n====================== articleVM.Article.ImageURL ===================", articleVM.Article.ImageURL);
 
                     articleVM.Article.Category = _unitOfWork.Category.Get(articleVM.Article.CategoryId);
 

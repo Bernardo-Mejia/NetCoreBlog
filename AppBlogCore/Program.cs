@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+//var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     //options.UseSqlServer(connectionString));
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -44,4 +44,4 @@ app.MapControllerRoute(
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-app.Run();
+app.Run("http://*:5001"); 

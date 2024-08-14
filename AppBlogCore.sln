@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBlogCore", "AppBlogCore\AppBlogCore.csproj", "{A6BACEFF-FE46-4863-A686-8980944740F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBlogCore", "AppBlogCore\AppBlogCore.csproj", "{A6BACEFF-FE46-4863-A686-8980944740F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBlogCore.DataAccess", "AppBlogCore.DataAccess\AppBlogCore.DataAccess.csproj", "{AC0042CA-A820-4971-9C91-D5272C640A6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBlogCore.DataAccess", "AppBlogCore.DataAccess\AppBlogCore.DataAccess.csproj", "{AC0042CA-A820-4971-9C91-D5272C640A6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBlogCore.Models", "AppBlogCore.Models\AppBlogCore.Models.csproj", "{004E2E9B-74D8-4F78-9C0E-99FD1E9749E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBlogCore.Models", "AppBlogCore.Models\AppBlogCore.Models.csproj", "{004E2E9B-74D8-4F78-9C0E-99FD1E9749E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBlogCore.Utilities", "AppBlogCore.Utilities\AppBlogCore.Utilities.csproj", "{0F445766-2FDA-4D02-9717-C901D764F687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBlogCore.Utilities", "AppBlogCore.Utilities\AppBlogCore.Utilities.csproj", "{0F445766-2FDA-4D02-9717-C901D764F687}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{05F73F4B-8B9B-401C-B2A4-1EBD14DD410E}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
