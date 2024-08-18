@@ -41,7 +41,6 @@ namespace AppBlogCore.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -79,20 +78,19 @@ namespace AppBlogCore.Data.Migrations
                 {
                     b.Property<int>("SliderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SliderId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SliderId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Status")
-                        .HasColumnType("boolean");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UrlImagen")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SliderId");
 

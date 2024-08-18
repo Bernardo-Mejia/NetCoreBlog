@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AppBlogCore.DataAccess.Migrations
+namespace AppBlogCore.Data.Migrations
 {
     /// <inheritdoc />
     public partial class SliderTable : Migration
@@ -14,20 +13,20 @@ namespace AppBlogCore.DataAccess.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "ImageURL",
                 table: "Articles",
-                type: "text",
+                type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.CreateTable(
                 name: "Sliders",
                 columns: table => new
                 {
-                    SliderId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<bool>(type: "boolean", nullable: true),
-                    UrlImagen = table.Column<string>(type: "text", nullable: false)
+                    SliderId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    UrlImagen = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,11 +43,11 @@ namespace AppBlogCore.DataAccess.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "ImageURL",
                 table: "Articles",
-                type: "text",
+                type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "text",
+                oldType: "nvarchar(max)",
                 oldNullable: true);
         }
     }
