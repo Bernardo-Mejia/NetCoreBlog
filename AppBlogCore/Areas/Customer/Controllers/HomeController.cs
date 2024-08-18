@@ -23,7 +23,19 @@ namespace AppBlogCore.Areas.Customer.Controllers
                 ArticlesList = _unitOfWork.Article.GetAll(),
                 SlidersList = _unitOfWork.Slider.GetAll(s => s.Status == true),
             };
+
+            ViewBag.IsHome = true;
+
             return View(vm);
+        }
+
+        public IActionResult Details(int id)
+        {
+            Article article = _unitOfWork.Article.Get(id);
+            if (article != null)
+                return View(article);
+            else
+                return NotFound();
         }
 
         public IActionResult Privacy()
