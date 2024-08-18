@@ -1,4 +1,6 @@
-﻿using AppBlogCore.Models;
+﻿using AppBlogCore.DataAccess.Data.Repository.IRepository;
+using AppBlogCore.Models;
+using AppBlogCore.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,16 +9,21 @@ namespace AppBlogCore.Areas.Customer.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            HomeVM vm = new HomeVM()
+            {
+                ArticlesList = _unitOfWork.Article.GetAll(),
+                SlidersList = _unitOfWork.Slider.GetAll(s => s.Status == true),
+            };
+            return View(vm);
         }
 
         public IActionResult Privacy()
