@@ -13,6 +13,8 @@ namespace AppBlogCore.DataAccess.Data.Repository.IRepository
 
         IArticleRepository Article { get; }
 
+        ISliderRepository Slider { get; }
+
         void Save();
     }
 }

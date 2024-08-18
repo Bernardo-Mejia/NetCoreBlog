@@ -32,7 +32,7 @@ namespace AppBlogCore.DataAccess.Data.Repository
 
         public void Update(Category category)
         {
-            Category initialCategory = _db.Categories.Find(category.Id);
+            Category initialCategory = _db.Categories.Find(category.Id)!;
             if (initialCategory != null)
             {
                 initialCategory.Name = category.Name;
