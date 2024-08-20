@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using AppBlogCore.Models;
+using AppBlogCore.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -28,6 +29,7 @@ namespace AppBlogCore.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         //private readonly IEmailSender _emailSender;
 
@@ -36,12 +38,14 @@ namespace AppBlogCore.Areas.Identity.Pages.Account
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
+            RoleManager<IdentityRole> roleManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
             //_emailSender = emailSender;
         }
@@ -145,6 +149,29 @@ namespace AppBlogCore.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    // Create roles if not exists
+                    if (!await _roleManager.RoleExistsAsync(Roles.Admin))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(Roles.Admin));
+                        await _roleManager.CreateAsync(new IdentityRole(Roles.User));
+                    }
+
+                    // Get selected role
+                    string role = Request.Form["radUserRole"].ToString();
+
+                    if (role == Roles.Admin)
+                    {
+                        await _userManager.AddToRoleAsync(user, Roles.Admin);
+                    }
+                    else if (role == Roles.User)
+                    {
+                        await _userManager.AddToRoleAsync(user, Roles.User);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, Roles.User);
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
