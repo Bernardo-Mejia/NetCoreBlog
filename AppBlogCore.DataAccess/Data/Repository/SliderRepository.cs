@@ -3,7 +3,6 @@ using AppBlogCore.DataAccess.Data.Repository.IRepository;
 using AppBlogCore.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
